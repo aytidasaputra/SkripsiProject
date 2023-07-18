@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, ToastAndroid } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Stack, TextInput, IconButton } from "@react-native-material/core";
@@ -12,20 +12,23 @@ function Login({ navigation }): JSX.Element {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
 
-    const getUsers = async () => {
-        console.log("USERNAME", email);
-        console.log("PASSWORD", password);
+    const showToast = () => {
+        ToastAndroid.showWithGravityAndOffset(
+            'Email atau password salah.',
+            ToastAndroid.LONG,
+            ToastAndroid.TOP,
+            25,
+            50,
+        );
+    };
 
+    const getUsers = async () => {
         let params = {
             email: email,
             password: password
         }
 
-        let url = 'http://localhost:3000/login'
-
-
-        setLoading(true);
-        console.log("PARAMS", params);
+        let url = 'http://192.168.1.8:3000/login'
 
         await axios({
             url: url,
@@ -37,29 +40,23 @@ function Login({ navigation }): JSX.Element {
             },
         })
             .then((res) => {
-                console.log("RES", res);
+                setUsers(res.data.data[0]);
 
-                setLoading(false);
-                setUsers(res.data.users);
+                if (res.data.data.length == 0) {
+                    showToast()
+
+                } else {
+                    navigation.navigate('HomeUser', users)
+
+                }
+
             })
             .catch((err) => {
                 // Error handling
-                setLoading(false);
-                console.log('error', err);
+                showToast()
                 return null;
             });
     };
-
-    // useEffect(() => {
-    //     // getUsers();
-    // }, []);
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    console.log("LOG1", email);
-
 
     return (
         <View style={{ backgroundColor: '#fff', flex: 1 }}>
@@ -104,11 +101,9 @@ function Login({ navigation }): JSX.Element {
             <View style={{ marginBottom: 10, alignSelf: 'center' }}>
                 <Text style={{ color: '#0081C9' }}>
                     Belum punya akun?
-                    <TouchableOpacity onPress={() =>
-                        navigation.navigate('register')
-                    }>
-                        <Text style={{ fontWeight: 'bold' }} > Silahkan daftar baru</Text>
-                    </TouchableOpacity>
+                    <Text onPress={() =>
+                        navigation.navigate('Register')
+                    } style={{ fontWeight: 'bold' }} > Silahkan daftar baru</Text>
                 </Text>
             </View>
 
