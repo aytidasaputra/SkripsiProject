@@ -14,7 +14,7 @@ Email: <aytidasaputra@gmail.com>
 
 Password: P@ssw0rd
 
-1. Registrasi
+2. Registrasi
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.001.png)
 
@@ -24,25 +24,25 @@ Jika belum mempunyai akun login, silah kan klik **Silahkan daftar baru.** Maka a
 
 Silahkan isi seluruh inputan dan pilih status penggunanya sebagai penduduka atau admin (rt,rw)
 
-1. Menu Utama
+3. Menu Utama
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.004.png)
 
 Jika berhasil login akan masuk kehalaman utama seperti gambar diatas. Ada 4 Menu utama untuk user role (penduduk). Yang pertama untuk menu profil, menu ini wajib diisi sebelum mulai mengajukan surat pengajuan. Lalu ada halaman pengajuan, untuk membuat pengajuan surat, ada list pengajuan sebagai riwayat pengajuan, dan ada daftar penduduk.
 
-1. Profil
+4. Profil
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.005.png)
 
 Diatas adalah menu profil untuk membuat data master detail, isi semua inputan lalu simpan.
 
-1. Menu Pengajuan
+5. Menu Pengajuan
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.006.png)
 
 Diatas adalah tampilan pengajuan jika anda mengklik menu pengajuan pada halaman pertama, silahkan isi seluruh inputannya sesuai kebutuhan anda. Kelik ajukan jika sudah sesuai. Untuk button download akan otomatis aktiv jika pengajuan sudah diterima
 
-1. Riwayat pengajuan
+6. Riwayat pengajuan
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.007.png)
 
@@ -54,7 +54,7 @@ Jika anda meng klik download maka akan muncul report seperti berikut
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.009.png)
 
-1. Pencarian data penduduk
+7. Pencarian data penduduk
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.010.png)
 
@@ -64,7 +64,7 @@ Berikut adalah tampilan data penduduk
 
 Untuk user role admin perbedaannya hanya pada menu list pengajuan, pengajuan, list penduduk, dan inputan kategori masyrakat miskin
 
-1. **Riwayat pengajuan**
+8. **Riwayat pengajuan**
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.011.png)
 
@@ -74,7 +74,7 @@ berikut adalah list pengajuan, anda bisa memilih list pengajuan yang mau anda ru
 
 Berikut adalah pilihan rubah status, jika anda sudah memilih status silahkan klik tombol simpan.
 
-1. **Menu laporan**
+9. **Menu laporan**
 
 ![](https://github.com/aytidasaputra/images/blob/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.013.png)
 
@@ -82,7 +82,7 @@ Gambar diatas adalah tombol – tombol untuk mendownload laporan yang diinginkan
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.014.png)
 
-1. **List penduduk**
+10. **List penduduk**
 
 ![](https://raw.githubusercontent.com/aytidasaputra/images/main/Aspose.Words.706953d9-f99c-412d-97c5-8ed04d1bc1d7.015.png)
 
