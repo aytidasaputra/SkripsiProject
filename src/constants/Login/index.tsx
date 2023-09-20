@@ -4,6 +4,7 @@ import { Text, View, TouchableOpacity, ToastAndroid } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Stack, TextInput, IconButton } from "@react-native-material/core";
+import { API_URL } from '@env'
 
 function Login({ navigation }): JSX.Element {
 
@@ -28,7 +29,10 @@ function Login({ navigation }): JSX.Element {
             password: password
         }
 
-        let url = 'http://192.168.1.8:3000/login'
+        let url = `${API_URL}login`
+
+        console.log("URL", url);
+
 
         await axios({
             url: url,
@@ -42,11 +46,20 @@ function Login({ navigation }): JSX.Element {
             .then((res) => {
                 setUsers(res.data.data[0]);
 
+                console.log("res.data.data[0]", res.data.data[0]);
+
+
                 if (res.data.data.length == 0) {
                     showToast()
 
                 } else {
-                    navigation.navigate('HomeUser', users)
+
+                    if (res.data.data[0].role == 'warga') {
+                        navigation.navigate('HomeUser', res.data.data[0])
+
+                    } else if (res.data.data[0].role == 'rt') {
+                        navigation.navigate('HomeAdmin', res.data.data[0])
+                    }
 
                 }
 

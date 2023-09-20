@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { TextInput } from "@react-native-material/core";
 import { Text, TouchableOpacity, View, ToastAndroid, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { API_URL } from '@env'
 import axios from 'axios';
 
 function Register({ navigation }): JSX.Element {
@@ -37,7 +38,7 @@ function Register({ navigation }): JSX.Element {
         console.log("PARAMS", params);
 
 
-        let url = 'http://192.168.1.8:3000/register'
+        let url = `${API_URL}register`
 
         await axios({
             url: url,

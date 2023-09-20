@@ -4,18 +4,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { TextInput } from "@react-native-material/core";
 import { Text, TouchableOpacity, View, ToastAndroid, Alert, ScrollView, SafeAreaView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { API_URL } from '@env'
 import axios from 'axios';
 
 function Profil({ navigation, route }): JSX.Element {
 
-    console.log("masuk navigate profil", route.params);
     let users = route.params
-    const [nama, setNama] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [status, setStatus] = useState('');
-    const [nik, setNik] = useState('');
 
+    const [nik, setNik] = useState('');
+    const [nama, setNama] = useState('');
+    const [tempatLahir, setTempatLahir] = useState('');
+    const [tanggalLahir, setTanggalLahir] = useState('');
+    const [rt, setRt] = useState('');
+    const [rw, setRw] = useState('');
+    const [namart, setNamaRt] = useState('');
+    const [namarw, setNamaRw] = useState('');
+    const [nomorRumah, setNomorRumah] = useState('');
+    const [alamat, setAlamat] = useState('');
+    const [alamatAsal, setAlamatAsal] = useState('');
+    const [pendapatan, setPendapatan] = useState('');
+    const [pekerjaan, setPekerjaan] = useState('');
+    const [statusKawin, setStatusKawin] = useState('');
+    const [jumlahAnak, setJumlahAnak] = useState('');
+    const [jenisKelamin, setJenisKelamin] = useState('');
+    const [agama, setAgama] = useState('');
     const showToast = () => {
         ToastAndroid.showWithGravityAndOffset(
             'Simpan gagal.',
@@ -26,20 +38,37 @@ function Profil({ navigation, route }): JSX.Element {
         );
     };
 
+    useEffect(() => {
+        if (nik != null) {
+            getProfil()
+        }
+    }, []);
 
     const save = async () => {
+
         let params = {
+            kd_users: nik,
             nama: nama,
-            nik: nik,
-            password: password,
-            role: status,
-            email: email
+            tempat_lahir: tempatLahir,
+            tanggal_lahir: tanggalLahir,
+            rt: rt,
+            rw: rw,
+            nama_rt: namart,
+            nama_rw: namarw,
+            nomor_rumah: nomorRumah,
+            alamat: alamat,
+            alamat_asal: alamatAsal,
+            pendapatan: pendapatan,
+            pekerjaan: pekerjaan,
+            status_perkawinan: statusKawin,
+            jumlah_anak: jumlahAnak,
+            jenis_kelamin: jenisKelamin,
+            agama: agama
         }
 
-        console.log("PARAMS", params);
 
 
-        let url = 'http://192.168.1.8:3000/register'
+        let url = `${API_URL}profil`
 
         await axios({
             url: url,
@@ -51,21 +80,70 @@ function Profil({ navigation, route }): JSX.Element {
             },
         })
             .then((res) => {
-                Alert.alert('Berhasil daftar, silahkan login', '', [
+
+                Alert.alert('Berhasil daftar', '', [
                     {
                         text: 'Cancel',
                         onPress: () => console.log('Cancel Pressed'),
                         style: 'cancel',
                     },
-                    { text: 'OK', onPress: () => navigation.navigate('Login') },
+                    { text: 'OK', onPress: () => navigation.navigate('HomeUser', users) },
                 ]);
 
             })
             .catch((err) => {
                 // Error handling
-                console.log("ERRR", err);
+                // console.log("ERRR", err);
 
-                showToast()
+                return null;
+            });
+    };
+
+    const getProfil = async () => {
+
+        let params = {
+            kd_users: users.nik
+        }
+
+
+        let url = `${API_URL}list-users-detail`
+
+        await axios({
+            url: url,
+            method: 'POST',
+            data: params,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then((res) => {
+
+                const data = res.data.data[0]
+
+                setNik(data.kd_users)
+                setNama(data.nama)
+                setTanggalLahir(data.tanggal_lahir)
+                setTempatLahir(data.tempat_lahir)
+                setRt(data.rt)
+                setRw(data.rw)
+                setNamaRt(data.nama_rt)
+                setNamaRw(data.nama_rw)
+                setNomorRumah(data.nomor_rumah)
+                setAlamat(data.alamat)
+                setAlamatAsal(data.alamat_asal)
+                setPendapatan(data.pendapatan)
+                setPekerjaan(data.pekerjaan)
+                setStatusKawin(data.status_perkawinan)
+                setJumlahAnak(data.jumlah_anak)
+                setJenisKelamin(data.jenis_kelamin)
+                setAgama(data.agama)
+
+            })
+            .catch((err) => {
+                // Error handling
+                // console.log("ERRR", err);
+
                 return null;
             });
     };
@@ -80,28 +158,45 @@ function Profil({ navigation, route }): JSX.Element {
                 <TextInput
                     style={{ marginHorizontal: 30, marginTop: 10 }}
                     label="NIK"
+                    value={nik}
                     onChangeText={value => {
                         setNik(value)
-                        console.log(nik)
                     }}
                     variant="outlined"
                 />
                 <TextInput
                     style={{ marginHorizontal: 30, marginTop: 10 }}
                     label="Nama Lengkap"
+                    value={nama}
                     onChangeText={value => {
                         setNama(value)
-                        console.log(nama);
                     }}
                     variant="outlined"
                 />
-
+                <TextInput
+                    style={{ marginHorizontal: 30, marginTop: 10 }}
+                    label="Tempat Lahir"
+                    value={tempatLahir}
+                    onChangeText={value => {
+                        setTempatLahir(value)
+                    }}
+                    variant="outlined"
+                />
+                <TextInput
+                    style={{ marginHorizontal: 30, marginTop: 10 }}
+                    label="Tanggal Lahir"
+                    value={tanggalLahir}
+                    onChangeText={value => {
+                        setTanggalLahir(value)
+                    }}
+                    variant="outlined"
+                />
+                <Text style={{ marginHorizontal: 30, marginTop: 10, fontWeight: 'bold' }}>Pilih RT</Text>
                 <Picker
-                    selectedValue={status}
+                    selectedValue={rt}
                     // style={{ height: 50, width: 150 }}
                     onValueChange={(itemValue, itemIndex) => {
-                        setStatus(itemValue)
-                        console.log(status)
+                        setRt(itemValue)
                     }}
                     style={{ marginHorizontal: 30, marginTop: 10, borderRadius: 10, borderColor: '#0081C9', borderStyle: 'solid', borderWidth: 1 }}
                 >
@@ -118,12 +213,12 @@ function Profil({ navigation, route }): JSX.Element {
                     <Picker.Item label="RT 11" value="11" />
                     <Picker.Item label="RT 12" value="12" />
                 </Picker>
+                <Text style={{ marginHorizontal: 30, marginTop: 10, fontWeight: 'bold' }}>Pilih RW</Text>
                 <Picker
-                    selectedValue={status}
+                    selectedValue={rw}
                     // style={{ height: 50, width: 150 }}
                     onValueChange={(itemValue, itemIndex) => {
-                        setStatus(itemValue)
-                        console.log(status)
+                        setRw(itemValue)
                     }}
                     style={{ marginHorizontal: 30, marginTop: 10, borderRadius: 10, borderColor: '#0081C9', borderStyle: 'solid', borderWidth: 1 }}
                 >
@@ -142,9 +237,36 @@ function Profil({ navigation, route }): JSX.Element {
                 </Picker>
                 <TextInput
                     style={{ marginHorizontal: 30, marginTop: 10 }}
+                    label="Nama RT"
+                    value={namart}
                     onChangeText={value => {
-                        setEmail(value)
-                        console.log(email)
+                        setNamaRt(value)
+                    }}
+                    variant="outlined"
+                />
+                <TextInput
+                    style={{ marginHorizontal: 30, marginTop: 10 }}
+                    label="Nama RW"
+                    value={namarw}
+                    onChangeText={value => {
+                        setNamaRw(value)
+                    }}
+                    variant="outlined"
+                />
+                <TextInput
+                    style={{ marginHorizontal: 30, marginTop: 10 }}
+                    label="Nomor Rumah"
+                    value={nomorRumah}
+                    onChangeText={value => {
+                        setNomorRumah(value)
+                    }}
+                    variant="outlined"
+                />
+                <TextInput
+                    style={{ marginHorizontal: 30, marginTop: 10 }}
+                    value={alamat}
+                    onChangeText={value => {
+                        setAlamat(value)
                     }}
                     label="Alamat"
                     variant="outlined"
@@ -152,90 +274,87 @@ function Profil({ navigation, route }): JSX.Element {
                 <TextInput
                     style={{ marginHorizontal: 30, marginTop: 10 }}
                     label="Alamat Asal"
+                    value={alamatAsal}
                     onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
+                        setAlamatAsal(value)
                     }}
                     variant="outlined"
                 />
                 <TextInput
                     style={{ marginHorizontal: 30, marginTop: 10 }}
                     label="Pendapatan (Gaji)"
+                    value={pendapatan}
                     onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
+                        setPendapatan(value)
                     }}
                     variant="outlined"
                 />
                 <TextInput
                     style={{ marginHorizontal: 30, marginTop: 10 }}
                     label="Pekerjaan"
+                    value={pekerjaan}
                     onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
+                        setPekerjaan(value)
                     }}
                     variant="outlined"
                 />
-                <TextInput
-                    style={{ marginHorizontal: 30, marginTop: 10 }}
-                    label="Status Perkawinan"
-                    onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
+                <Text style={{ marginHorizontal: 30, marginTop: 10, fontWeight: 'bold' }}>Status Kawin</Text>
+                <Picker
+                    selectedValue={statusKawin}
+                    // style={{ height: 50, width: 150 }}
+                    onValueChange={(itemValue, itemIndex) => {
+                        setStatusKawin(itemValue)
                     }}
-                    variant="outlined"
-                />
+                    style={{ marginHorizontal: 30, marginTop: 10, borderRadius: 10, borderColor: '#0081C9', borderStyle: 'solid', borderWidth: 1 }}
+                >
+                    <Picker.Item label="Kawin" value="M" />
+                    <Picker.Item label="Belum Kawin" value="LJ" />
+                    <Picker.Item label="Cerai Hidup" value="DJ" />
+                    <Picker.Item label="Cerai Mati" value="CM" />
+                </Picker>
                 <TextInput
                     style={{ marginHorizontal: 30, marginTop: 10 }}
                     label="Jumlah Anak"
+                    value={jumlahAnak}
                     onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
+                        setJumlahAnak(value)
                     }}
                     variant="outlined"
                 />
-                <TextInput
-                    style={{ marginHorizontal: 30, marginTop: 10 }}
-                    label="Jenis Kelamin"
-                    onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
+                <Text style={{ marginHorizontal: 30, marginTop: 10, fontWeight: 'bold' }}>Jenis Kelamin</Text>
+                <Picker
+                    selectedValue={jenisKelamin}
+                    // style={{ height: 50, width: 150 }}
+                    onValueChange={(itemValue, itemIndex) => {
+                        setJenisKelamin(itemValue)
                     }}
-                    variant="outlined"
-                />
-                <TextInput
-                    style={{ marginHorizontal: 30, marginTop: 10 }}
-                    label="Tempat Lahir"
-                    onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
+                    style={{ marginHorizontal: 30, marginTop: 10, borderRadius: 10, borderColor: '#0081C9', borderStyle: 'solid', borderWidth: 1 }}
+                >
+                    <Picker.Item label="Laki - laki" value="M" />
+                    <Picker.Item label="Perempuan" value="LJ" />
+                </Picker>
+
+                <Text style={{ marginHorizontal: 30, marginTop: 10, fontWeight: 'bold' }}>Agama</Text>
+                <Picker
+                    selectedValue={agama}
+                    onValueChange={(itemValue, itemIndex) => {
+                        setAgama(itemValue)
                     }}
-                    variant="outlined"
-                />
-                <TextInput
-                    style={{ marginHorizontal: 30, marginTop: 10 }}
-                    label="Agama"
-                    onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
-                    }}
-                    variant="outlined"
-                />
-                <TextInput
-                    style={{ marginHorizontal: 30, marginTop: 10 }}
-                    label="Tanggal Lahir"
-                    onChangeText={value => {
-                        setPassword(value)
-                        console.log(password)
-                    }}
-                    variant="outlined"
-                />
+                    style={{ marginHorizontal: 30, marginTop: 10, borderRadius: 10, borderColor: '#0081C9', borderStyle: 'solid', borderWidth: 1 }}
+                >
+                    <Picker.Item label="Islam" value="ISLAM" />
+                    <Picker.Item label="Kristen Protestan" value="KP" />
+                    <Picker.Item label="Kristen Katolik" value="KK" />
+                    <Picker.Item label="Hindu" value="HINDU" />
+                    <Picker.Item label="Buddha" value="BUDDHA" />
+                    <Picker.Item label="Konghucu" value="KONGHUCU" />
+                </Picker>
 
 
                 <TouchableOpacity onPress={() =>
                     save()
                 } style={{ marginHorizontal: 30, height: 30, marginTop: 30, backgroundColor: '#0081C9', borderRadius: 5, marginBottom: 50 }}>
-                    <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold', marginTop: 3 }}>Daftar</Text>
+                    <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold', marginTop: 3 }}>Simpan</Text>
                 </TouchableOpacity>
 
             </ScrollView>
