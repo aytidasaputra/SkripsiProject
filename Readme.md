@@ -1,7 +1,5 @@
 ﻿**USERS GUIDE**
 
-**Perancangan Sistem Administrasi Kependudukan Berbasis Android Di Wilayah RW 10 Kota Baru Bekasi Barat**
-
 **User Role penduduk**
 
 1. Login
